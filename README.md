@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌾 AgroBot — AI Farming Advisor
 
-## Getting Started
+A purpose-built chatbot for Indian farmers, powered by Groq AI (Llama 3.3 70B).
 
-First, run the development server:
+## 🌐 Live Demo
+[https://agribot-delta.vercel.app](https://agribot-delta.vercel.app)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 💡 Why I Built This
+I chose farming as the topic because I have hands-on experience building a crop prediction ML model using soil and weather data. AgroBot turns that domain knowledge into a conversational product — making agricultural expertise accessible to any farmer in plain language.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🤖 What It Does
+- Recommends crops based on soil type and region
+- Gives fertilizer advice with exact NPK ratios
+- Helps diagnose and treat crop diseases and pests
+- Guides farmers on irrigation and seasonal planning
+- Focused specifically on Indian farming conditions
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠 Tech Stack
+- **Frontend**: Next.js 16, Tailwind CSS, Framer Motion
+- **Backend**: Next.js API Route
+- **AI**: Groq API (Llama 3.3 70B) via AI SDK
+- **Deployment**: Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🧠 The AI Brain
+The chatbot is trained via a detailed system prompt covering:
+- Kharif, Rabi, and Zaid crop seasons
+- 8 Indian soil types (black cotton, red, alluvial, sandy, laterite etc.)
+- NPK fertilizer ratios per crop
+- Common pests and diseases with treatments
+- Regional farming knowledge across 28 Indian states
 
-## Learn More
+## ✨ Frontend Thinking
+- **Landing page** with hero, features, and starter questions
+- **Smooth page transitions** between landing and chat
+- **Loading state**: animated bouncing dots with "AgroBot is thinking..."
+- **Empty state**: welcoming prompt to ask first question
+- **Dark/light mode** with system preference detection
+- **Streaming responses** for real-time feel
+- **Mobile responsive** throughout
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🚀 Run Locally
+git clone https://github.com/Anushree2005-AI/agribot.git
+cd agribot
+npm install
+Add GROQ_API_KEY to .env.local
