@@ -2,17 +2,18 @@
 
 import { useChat } from '@ai-sdk/react';
 import { useRef, useEffect, useState } from 'react';
+import type { Transition } from 'framer-motion';
 import {
   LazyMotion,
   domAnimation,
   m as motion,
   AnimatePresence,
-  useReducedMotion,
 } from 'framer-motion';
 
-const spring = { type: 'spring', stiffness: 300, damping: 24, mass: 1.1 };
-const easeOut = [0.165, 0.84, 0.44, 1];
-const easeCubic = [0.4, 0, 0.2, 1];
+const spring: Transition = { type: 'spring', stiffness: 300, damping: 24, mass: 1.1 };
+const springGentle: Transition = { type: 'spring', stiffness: 300, damping: 24, mass: 1.1 };
+const easeOut = [0.165, 0.84, 0.44, 1] as const;
+const easeCubic = [0.4, 0, 0.2, 1] as const;
 
 const starterQuestions = [
   { icon: '🌱', text: 'Best crop for black cotton soil?', tag: 'Soil' },
@@ -46,7 +47,6 @@ export default function Home() {
   const isLoading = status === 'streaming' || status === 'submitted';
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const saved = localStorage.getItem('agro-dark-mode');
@@ -61,7 +61,7 @@ export default function Home() {
     if (!isMounted) return;
     localStorage.setItem('agro-dark-mode', String(darkMode));
     document.documentElement.classList.toggle('dark', darkMode);
-  }, [darkMode]);
+  }, [darkMode, isMounted]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -102,20 +102,25 @@ export default function Home() {
     <LazyMotion features={domAnimation}>
       <div className={`min-h-screen transition-colors duration-500 ${dark ? 'bg-gray-950' : 'bg-stone-50'}`}>
 
-        {/* Dark mode toggle — always visible */}
+        {/* Dark mode toggle */}
         <button
           onClick={toggleDarkMode}
           suppressHydrationWarning
           className="fixed top-5 right-5 z-50 p-2.5 rounded-2xl backdrop-blur-md border border-white/20 bg-white/10 hover:bg-white/20 transition-all duration-300 shadow-lg"
         >
-          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} transition={spring}>
+          <motion.div
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            transition={spring}
+            className="w-7 h-7 flex items-center justify-center text-xl"
+          >
             {isMounted ? (dark ? '🌙' : '☀️') : '☀️'}
           </motion.div>
         </button>
 
         <AnimatePresence mode="wait">
 
-          {/* ─── LANDING PAGE ─── */}
+          {/* LANDING PAGE */}
           {showLanding && (
             <motion.div
               key="landing"
@@ -127,27 +132,22 @@ export default function Home() {
             >
               {/* Hero */}
               <div className="relative overflow-hidden flex-shrink-0">
-                {/* Background */}
                 <div className={`absolute inset-0 ${dark
                   ? 'bg-[radial-gradient(ellipse_at_top_left,_#064e3b_0%,_#0f172a_40%,_#042f2e_100%)]'
                   : 'bg-[radial-gradient(ellipse_at_top_left,_#059669_0%,_#065f46_40%,_#0f766e_100%)]'
                 }`} />
 
-                {/* Glow orbs */}
                 <div className="absolute top-20 left-10 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl" />
                 <div className="absolute top-10 right-20 w-72 h-72 bg-teal-400/15 rounded-full blur-3xl" />
                 <div className="absolute bottom-0 left-1/2 w-80 h-80 bg-green-600/10 rounded-full blur-3xl" />
 
-                {/* Floating emojis background */}
+                {/* Floating emojis */}
                 <div className="absolute inset-0 overflow-hidden select-none pointer-events-none">
                   {['🌾', '🌱', '🍃', '🌿', '🌻', '🌽', '🍅', '🥬'].map((emoji, i) => (
                     <motion.div
                       key={i}
                       className="absolute text-4xl opacity-10"
-                      style={{
-                        left: `${10 + i * 12}%`,
-                        top: `${15 + (i % 3) * 25}%`,
-                      }}
+                      style={{ left: `${10 + i * 12}%`, top: `${15 + (i % 3) * 25}%` }}
                       animate={{ y: [0, -12, 0], rotate: [0, 5, -5, 0] }}
                       transition={{ duration: 4 + i * 0.5, repeat: Infinity, ease: 'easeInOut', delay: i * 0.3 }}
                     >
@@ -157,7 +157,6 @@ export default function Home() {
                 </div>
 
                 <div className="relative z-10 px-6 pt-20 pb-16 md:pt-28 md:pb-24 text-center max-w-5xl mx-auto">
-                  {/* Badge */}
                   <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -168,7 +167,6 @@ export default function Home() {
                     AI-Powered · India Focused · Free
                   </motion.div>
 
-                  {/* Main heading */}
                   <motion.h1
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -186,10 +184,13 @@ export default function Home() {
                     transition={{ delay: 0.4, duration: 0.8 }}
                     className="text-emerald-100/85 text-xl md:text-2xl max-w-2xl mx-auto leading-relaxed font-light mb-10"
                   >
-                    Your intelligent farming companion. Ask about <span className="text-emerald-300 font-medium">crops</span>, <span className="text-teal-300 font-medium">soil</span>, <span className="text-cyan-300 font-medium">pests</span>, and <span className="text-green-300 font-medium">seasons</span> — in plain language.
+                    Your intelligent farming companion. Ask about{' '}
+                    <span className="text-emerald-300 font-medium">crops</span>,{' '}
+                    <span className="text-teal-300 font-medium">soil</span>,{' '}
+                    <span className="text-cyan-300 font-medium">pests</span>, and{' '}
+                    <span className="text-green-300 font-medium">seasons</span> — in plain language.
                   </motion.p>
 
-                  {/* CTA Buttons */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -198,7 +199,7 @@ export default function Home() {
                   >
                     <motion.button
                       onClick={() => enterChat()}
-                      whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(16,185,129,0.35)' }}
+                      whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.97 }}
                       transition={spring}
                       className="px-10 py-4 rounded-2xl font-bold text-lg text-white bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 shadow-2xl shadow-emerald-500/30 transition-all duration-300"
@@ -216,7 +217,6 @@ export default function Home() {
                     </motion.button>
                   </motion.div>
 
-                  {/* Stats */}
                   <motion.div
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -239,7 +239,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Features section */}
+              {/* Features */}
               <div className={`py-16 px-6 ${dark ? 'bg-gray-950' : 'bg-stone-50'}`}>
                 <div className="max-w-5xl mx-auto">
                   <motion.h2
@@ -260,7 +260,6 @@ export default function Home() {
                   >
                     Powered by advanced AI with deep knowledge of Indian agriculture
                   </motion.p>
-
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                     {features.map((f, i) => (
                       <motion.div
@@ -272,7 +271,7 @@ export default function Home() {
                         whileHover={{ y: -6, scale: 1.02 }}
                         className={`p-6 rounded-3xl border transition-all duration-300 cursor-default
                           ${dark
-                            ? 'bg-gray-900 border-gray-800 hover:border-emerald-800 hover:shadow-lg hover:shadow-emerald-950'
+                            ? 'bg-gray-900 border-gray-800 hover:border-emerald-800 hover:shadow-lg'
                             : 'bg-white border-gray-200 hover:border-emerald-300 hover:shadow-xl shadow-sm'
                           }`}
                       >
@@ -285,7 +284,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Quick start questions */}
+              {/* Quick start */}
               <div className={`py-16 px-6 ${dark ? 'bg-gray-900/50' : 'bg-emerald-50/50'}`}>
                 <div className="max-w-5xl mx-auto">
                   <motion.h2
@@ -297,7 +296,6 @@ export default function Home() {
                   >
                     Ask anything 🌾
                   </motion.h2>
-
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {starterQuestions.map((q, i) => (
                       <motion.button
@@ -329,7 +327,6 @@ export default function Home() {
                     ))}
                   </div>
 
-                  {/* Big CTA */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -339,7 +336,7 @@ export default function Home() {
                   >
                     <motion.button
                       onClick={() => enterChat()}
-                      whileHover={{ scale: 1.06, boxShadow: '0 24px 48px rgba(16,185,129,0.3)' }}
+                      whileHover={{ scale: 1.06 }}
                       whileTap={{ scale: 0.97 }}
                       transition={spring}
                       className="px-14 py-5 rounded-2xl font-black text-xl text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 shadow-2xl shadow-emerald-600/25 transition-all duration-300"
@@ -362,7 +359,7 @@ export default function Home() {
             </motion.div>
           )}
 
-          {/* ─── CHAT PAGE ─── */}
+          {/* CHAT PAGE */}
           {!showLanding && (
             <motion.div
               key="chat"
@@ -385,6 +382,7 @@ export default function Home() {
                     onClick={() => setShowLanding(true)}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    transition={spring}
                     className="absolute top-5 left-5 text-emerald-300/70 hover:text-emerald-200 text-sm font-medium flex items-center gap-1 transition-colors"
                   >
                     ← Back
@@ -475,7 +473,7 @@ export default function Home() {
                           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
                         />
                       </div>
-                      <div className={`flex flex-col gap-1`}>
+                      <div className="flex flex-col gap-1">
                         <span className={`text-xs font-medium px-2 ${dark ? 'text-gray-500' : 'text-gray-400'}`}>AgroBot</span>
                         <div className={`backdrop-blur-lg border shadow-lg px-6 py-4 rounded-3xl rounded-bl-lg
                           ${dark ? 'bg-gray-800/90 border-gray-700/60' : 'bg-white/95 border-gray-200/70'}`}>
