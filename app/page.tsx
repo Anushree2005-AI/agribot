@@ -10,8 +10,8 @@ import {
   AnimatePresence,
 } from 'framer-motion';
 
-const spring: Transition = { type: 'spring', stiffness: 300, damping: 24, mass: 1.1 };
-const springGentle: Transition = { type: 'spring', stiffness: 300, damping: 24, mass: 1.1 };
+const spring: Transition = { type: 'spring' as const, stiffness: 300, damping: 24, mass: 1.1 };
+const springGentle: Transition = { type: 'spring' as const, stiffness: 300, damping: 24, mass: 1.1 };
 const easeOut = [0.165, 0.84, 0.44, 1] as const;
 const easeCubic = [0.4, 0, 0.2, 1] as const;
 
@@ -136,7 +136,6 @@ export default function Home() {
                   ? 'bg-[radial-gradient(ellipse_at_top_left,_#064e3b_0%,_#0f172a_40%,_#042f2e_100%)]'
                   : 'bg-[radial-gradient(ellipse_at_top_left,_#059669_0%,_#065f46_40%,_#0f766e_100%)]'
                 }`} />
-
                 <div className="absolute top-20 left-10 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl" />
                 <div className="absolute top-10 right-20 w-72 h-72 bg-teal-400/15 rounded-full blur-3xl" />
                 <div className="absolute bottom-0 left-1/2 w-80 h-80 bg-green-600/10 rounded-full blur-3xl" />
@@ -149,7 +148,7 @@ export default function Home() {
                       className="absolute text-4xl opacity-10"
                       style={{ left: `${10 + i * 12}%`, top: `${15 + (i % 3) * 25}%` }}
                       animate={{ y: [0, -12, 0], rotate: [0, 5, -5, 0] }}
-                      transition={{ duration: 4 + i * 0.5, repeat: Infinity, ease: 'easeInOut', delay: i * 0.3 }}
+                      transition={{ duration: 4 + i * 0.5, repeat: Infinity, ease: 'easeInOut' as const, delay: i * 0.3 }}
                     >
                       {emoji}
                     </motion.div>
@@ -160,7 +159,7 @@ export default function Home() {
                   <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1, duration: 0.6, ease: easeOut }}
+                    transition={{ delay: 0.1, duration: 0.6 }}
                     className="inline-flex items-center gap-2 bg-white/10 backdrop-blur border border-white/25 text-emerald-200 text-xs font-bold px-5 py-2 rounded-full mb-6 tracking-widest uppercase shadow-lg"
                   >
                     <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
@@ -170,7 +169,7 @@ export default function Home() {
                   <motion.h1
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2, duration: 0.8, ease: easeOut }}
+                    transition={{ delay: 0.2, duration: 0.8 }}
                     className="text-6xl md:text-8xl font-black mb-6 leading-none tracking-tight"
                   >
                     <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-300 via-teal-200 to-cyan-300 drop-shadow-2xl">
@@ -194,7 +193,7 @@ export default function Home() {
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.55, duration: 0.6, ease: easeOut }}
+                    transition={{ delay: 0.55, duration: 0.6 }}
                     className="flex flex-col sm:flex-row gap-4 justify-center mb-14"
                   >
                     <motion.button
@@ -246,7 +245,7 @@ export default function Home() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.6, ease: easeOut }}
+                    transition={{ duration: 0.6 }}
                     className={`text-3xl md:text-4xl font-black text-center mb-3 ${dark ? 'text-white' : 'text-gray-800'}`}
                   >
                     Everything a farmer needs 🌿
@@ -267,7 +266,7 @@ export default function Home() {
                         initial={{ opacity: 0, y: 24 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ delay: i * 0.1, duration: 0.5, ease: easeOut }}
+                        transition={{ delay: i * 0.1, duration: 0.5 }}
                         whileHover={{ y: -6, scale: 1.02 }}
                         className={`p-6 rounded-3xl border transition-all duration-300 cursor-default
                           ${dark
@@ -303,7 +302,7 @@ export default function Home() {
                         initial={{ opacity: 0, y: 16 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ delay: i * 0.08, duration: 0.5, ease: easeOut }}
+                        transition={{ delay: i * 0.08, duration: 0.5 }}
                         whileHover={{ scale: 1.03, y: -4 }}
                         whileTap={{ scale: 0.97 }}
                         onClick={() => enterChat(q.text)}
@@ -365,7 +364,7 @@ export default function Home() {
               key="chat"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: easeOut }}
+              transition={{ duration: 0.6 }}
               className="min-h-screen flex flex-col"
             >
               {/* Chat Header */}
@@ -376,7 +375,6 @@ export default function Home() {
                 }`} />
                 <div className="absolute top-0 left-0 w-64 h-64 bg-emerald-500/10 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl" />
                 <div className="absolute bottom-0 right-0 w-64 h-64 bg-teal-500/10 rounded-full translate-x-1/3 translate-y-1/3 blur-3xl" />
-
                 <div className="relative z-10 px-5 py-8 text-center backdrop-blur-xl bg-black/15 border-b border-white/10">
                   <motion.button
                     onClick={() => setShowLanding(true)}
@@ -387,7 +385,6 @@ export default function Home() {
                   >
                     ← Back
                   </motion.button>
-
                   <motion.h1
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -423,7 +420,7 @@ export default function Home() {
                     key={m.id}
                     initial={{ opacity: 0, y: 16, scale: 0.97 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.4, ease: easeOut }}
+                    transition={{ duration: 0.4 }}
                     className={`mb-6 flex items-end gap-3 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
                     {m.role === 'assistant' && (
@@ -431,7 +428,6 @@ export default function Home() {
                         🌱
                       </div>
                     )}
-
                     <div className={`flex flex-col gap-1 max-w-[78%] ${m.role === 'user' ? 'items-end' : 'items-start'}`}>
                       <span className={`text-xs font-medium px-2 ${dark ? 'text-gray-500' : 'text-gray-400'}`}>
                         {m.role === 'user' ? 'You' : 'AgroBot'}
@@ -447,7 +443,6 @@ export default function Home() {
                         {formatMessage(getMessageText(m))}
                       </div>
                     </div>
-
                     {m.role === 'user' && (
                       <div className={`w-10 h-10 rounded-2xl flex items-center justify-center text-xl shadow-lg flex-shrink-0 mb-1 ${dark ? 'bg-gray-700' : 'bg-gray-200'}`}>
                         👨‍🌾
@@ -462,7 +457,7 @@ export default function Home() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -12 }}
-                      transition={{ duration: 0.4, ease: easeOut }}
+                      transition={{ duration: 0.4 }}
                       className="flex items-end gap-3 mb-6"
                     >
                       <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 flex items-center justify-center text-xl shadow-lg flex-shrink-0 relative ring-2 ring-emerald-500/20 mb-1">
@@ -470,7 +465,7 @@ export default function Home() {
                         <motion.div
                           className="absolute inset-0 rounded-2xl border-2 border-emerald-400/50"
                           animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0.8, 0.4] }}
-                          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' as const }}
                         />
                       </div>
                       <div className="flex flex-col gap-1">
